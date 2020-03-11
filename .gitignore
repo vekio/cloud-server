@@ -36,3 +36,8 @@ override.tf.json
 
 ### docker-compose ###
 .env
+
+### Traefik ###
+traefik/access.log
+traefik/acme.json
+traefik/traefik.yml
