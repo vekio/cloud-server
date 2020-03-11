@@ -36,6 +36,8 @@ Otherwise if you use any other provider check what you need here https://www.ter
 ##### Docker
 Each service is on his own folder. Use `docker-compose up -d` in the services you want to run.
 
+First you must create the network `docker network create proxy`.
+
 The service Traefik is mandatory to enable the others run.
 
 ###### Traefik
@@ -54,3 +56,4 @@ Create a .env inside traefik folder and complete:
     # path to your traefik folder
     DATA=
 
+You must asure acme.json file has 600 permissions, `chmod 600 acme.json`.

@@ -1,0 +1,34 @@
+## Static configuration
+log:
+  level: INFO
+  
+accessLog:
+  filePath: /etc/traefik/access.log
+  bufferingSize: 1000
+  
+api:
+  dashboard: true
+
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: false
+  file:
+    filename: /etc/traefik/dynamic.yml
+    watch: true
+
+entryPoints:
+  http:
+    address: ":80"
+  https:
+    address: ":443"
+    
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      caServer: https://acme-v02.api.letsencrypt.org/directory
+      email: <YOUR EMAIL>
+      storage: /etc/traefik/acme.json
+      dnsChallenge:
+        provider: digitalocean
+        delayBeforeCheck: 0
