@@ -22,8 +22,6 @@ If you want to do it manualy skip this part of the setup.
 
 If you use digital ocean go inside the terraform folder and create a file named `terraform.tfvars` with the next lines and complete.
 
-Copy and complete the next lines
-
     # provider api access key
     do_token=""
     # server ip
@@ -34,4 +32,25 @@ Copy and complete the next lines
     project=""
 
 Otherwise if you use any other provider check what you need here https://www.terraform.io/docs/providers/index.html and rewrite the .tf files.
+
+##### Docker
+Each service is on his own folder. Use `docker-compose up -d` in the services you want to run.
+
+The service Traefik is mandatory to enable the others run.
+
+###### Traefik
+As point 2 indicates I use digital ocean as dns provider.
+
+Create a .env inside traefik folder and complete:
+
+    # domain.tld
+    DOMAIN_TLD=
+    # provider api access key
+    DO_TOKEN=
+    # user for auth
+    USER=alberto
+    # password for auth, use htpasswd to generate it
+    PASSWORD=
+    # path to your traefik folder
+    DATA=
 
