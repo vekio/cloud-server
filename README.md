@@ -17,11 +17,10 @@ This setup also uses wildcard certificate, so only one certificate is used for a
 
 3. Setup
 ##### Terraform
-Im using terraform to automatically create a dns domain and records on digital ocean.
-
-If you use digital ocean go inside the terraform folder and create a file named `terraform.tfvars` otherwise if you use any other provider check what you need here https://www.terraform.io/docs/providers/index.html and rewrite the .tf files.
-
+Im using terraform to automatically create a dns domain and records on digital ocean. 
 If you want to do it manualy skip this part of the setup.
+
+If you use digital ocean go inside the terraform folder and create a file named `terraform.tfvars` with the next lines and complete.
 
 Copy and complete the next lines
 
@@ -33,4 +32,6 @@ Copy and complete the next lines
     domain_tld=""
     # digital ocean project name
     project=""
+
+Otherwise if you use any other provider check what you need here https://www.terraform.io/docs/providers/index.html and rewrite the .tf files.
 
