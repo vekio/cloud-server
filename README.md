@@ -20,16 +20,7 @@ This setup also uses wildcard certificate, so only one certificate is used for a
 Im using terraform to automatically create a dns domain and records on digital ocean. 
 If you want to do it manualy skip this part of the setup.
 
-If you use digital ocean go inside the terraform folder and create a file named `terraform.tfvars` with the next lines and complete.
-
-    # provider api access key
-    do_token=""
-    # server ip
-    cloud_ip=""
-    # domain.tld
-    domain_tld=""
-    # digital ocean project name
-    project=""
+If you use digital ocean go inside the terraform folder and complete a file named `terraform.tfvars`.
 
 Otherwise if you use any other provider check what you need here https://www.terraform.io/docs/providers/index.html and rewrite the .tf files.
 
@@ -43,17 +34,6 @@ The service Traefik is mandatory to enable the others run.
 ###### Traefik
 As point 2 indicates I use digital ocean as dns provider.
 
-Create a .env inside traefik folder and complete:
+Complete .env inside traefik folder.
 
-    # domain.tld
-    DOMAIN_TLD=
-    # provider api access key
-    DO_TOKEN=
-    # user for auth
-    USER=alberto
-    # password for auth, use htpasswd to generate it
-    PASSWORD=
-    # path to your traefik folder
-    DATA=
-
-You must asure acme.json file has 600 permissions, `chmod 600 acme.json`.
+You must asure acme.json file has 600 permissions, `chmod 600 acme.json`. And put <YOUR EMAIL> on treafik.yml -> certificatesResolvers.
