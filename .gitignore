@@ -1,4 +1,3 @@
-
 # Created by https://www.gitignore.io/api/terraform
 # Edit at https://www.gitignore.io/?templates=terraform
 
@@ -35,3 +34,5 @@ override.tf.json
 
 # End of https://www.gitignore.io/api/terraform
 
+### docker-compose ###
+.env
