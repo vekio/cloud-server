@@ -39,3 +39,12 @@ resource "digitalocean_record" "documentserver_domain_tld" {
   value   = format("%s.", var.domain_tld)
   ttl     = 43200
 }
+
+# jellyfin.domain.tld
+resource "digitalocean_record" "jellyfin_domain_tld" {
+  domain  = digitalocean_domain.domain_tld.name
+  type    = "CNAME"
+  name    = "jellyfin"
+  value   = format("%s.", var.domain_tld)
+  ttl     = 43200
+}
