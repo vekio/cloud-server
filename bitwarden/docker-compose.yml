@@ -14,6 +14,7 @@ services:
     volumes:
       - ${DATA}/bw-data:/data
     environment:
+      ADMIN_TOKEN: ${TOKEN}
       WEBSOCKET_ENABLED: "true"
       SIGNUPS_ALLOWED: "true"
     labels:
@@ -34,17 +35,17 @@ services:
       - "traefik.http.services.bitwarden-ui.loadbalancer.server.port=80"
       # WEBSOCKET
       # https
-      - "traefik.http.routers.bitwarden-socket.entrypoints=web-secure"
-      - "traefik.http.routers.bitwarden-socket.rule=Host(`bitwarden.${DOMAIN_TLD}`) && Path(`/notifications/hub`)"
-      - "traefik.http.routers.bitwarden-socket.tls=true"
-      - "traefik.http.routers.bitwarden-socket.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.bitwarden-socket.tls.domains[0].main=*.${DOMAIN_TLD}"
-      - "traefik.http.routers.bitwarden-socket.tls.options=default"
+      - "traefik.http.routers.bitwarden-websocket.entrypoints=web-secure"
+      - "traefik.http.routers.bitwarden-websocket.rule=Host(`bitwarden.${DOMAIN_TLD}`) && Path(`/notifications/hub`)"
+      - "traefik.http.routers.bitwarden-websocket.tls=true"
+      - "traefik.http.routers.bitwarden-websocket.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.bitwarden-websocket.tls.domains[0].main=*.${DOMAIN_TLD}"
+      - "traefik.http.routers.bitwarden-websocket.tls.options=default"
       # middlewares
-      - "traefik.http.routers.bitwarden-socket.middlewares=security-headers@file"
+      - "traefik.http.routers.bitwarden-websocket.middlewares=security-headers@file"
       # services
-      - "traefik.http.routers.bitwarden-socket.service=bitwarden-socket"
-      - "traefik.http.services.bitwarden-socket.loadbalancer.server.port=3012"
+      - "traefik.http.routers.bitwarden-websocket.service=bitwarden-websocket"
+      - "traefik.http.services.bitwarden-websocket.loadbalancer.server.port=3012"
 
 networks:
   proxy:
