@@ -30,3 +30,12 @@ resource "digitalocean_record" "nextcloud_domain_tld" {
   value   = format("%s.", var.domain_tld)
   ttl     = 43200
 }
+
+# documentserver.domain.tld
+resource "digitalocean_record" "documentserver_domain_tld" {
+  domain  = digitalocean_domain.domain_tld.name
+  type    = "CNAME"
+  name    = "documentserver"
+  value   = format("%s.", var.domain_tld)
+  ttl     = 43200
+}
