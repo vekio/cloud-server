@@ -25,10 +25,13 @@ services:
       DO_AUTH_TOKEN: ${DO_TOKEN}
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.traefik.entrypoints=web"
-      - "traefik.http.routers.traefik.rule=Host(`traefik.${DOMAIN_TLD}`)"
-      - "traefik.http.middlewares.traefik-https-redirect.redirectscheme.scheme=https"
-      - "traefik.http.routers.traefik.middlewares=traefik-https-redirect"
+      # http catch-all
+      - traefik.http.routers.http-catchall.rule=HostRegexp(`{any:.+}`)
+      - traefik.http.routers.http-catchall.entrypoints=web
+      - traefik.http.routers.http-catchall.middlewares=https-redirect
+      - traefik.http.middlewares.https-redirect.redirectscheme.scheme=https
+      - traefik.http.middlewares.https-redirect.redirectscheme.permanent=true
+      # https
       - "traefik.http.routers.traefik-secure.entrypoints=web-secure"
       - "traefik.http.routers.traefik-secure.rule=Host(`traefik.${DOMAIN_TLD}`)"
       - "traefik.http.routers.traefik-secure.tls=true"

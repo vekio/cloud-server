@@ -11,11 +11,13 @@ services:
       - no-new-privileges:true
     networks:
       - proxy
+      - dbs
     depends_on:
       - db
       - redis
       - documentserver
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - ${DATA}/nextcloud-main:/var/www/html
       - ${DATA}/nextcloud-apps:/var/www/html/custom_apps
       - ${DATA}/nextcloud-config:/var/www/html/config
@@ -31,22 +33,17 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=proxy"
-      # http
-      - "traefik.http.routers.nextcloud.entrypoints=web"
-      - "traefik.http.routers.nextcloud.rule=Host(`nextcloud.${DOMAIN_TLD}`)"
-      - "traefik.http.middlewares.nextcloud-https-redirect.redirectscheme.scheme=https"
-      - "traefik.http.routers.nextcloud.middlewares=nextcloud-https-redirect"
       # https
-      - "traefik.http.routers.nextcloud-secure.entrypoints=web-secure"
-      - "traefik.http.routers.nextcloud-secure.rule=Host(`nextcloud.${DOMAIN_TLD}`)"
-      - "traefik.http.routers.nextcloud-secure.tls=true"
-      - "traefik.http.routers.nextcloud-secure.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.nextcloud-secure.tls.domains[0].main=*.${DOMAIN_TLD}"
-      - "traefik.http.routers.nextcloud-secure.tls.options=default"
+      - "traefik.http.routers.nextcloud.entrypoints=web-secure"
+      - "traefik.http.routers.nextcloud.rule=Host(`nextcloud.${DOMAIN_TLD}`)"
+      - "traefik.http.routers.nextcloud.tls=true"
+      - "traefik.http.routers.nextcloud.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.nextcloud.tls.domains[0].main=*.${DOMAIN_TLD}"
+      - "traefik.http.routers.nextcloud.tls.options=default"
       # middlewares
-      - "traefik.http.routers.nextcloud-secure.middlewares=security-headers@file, nextcloud-redirect@file"
+      - "traefik.http.routers.nextcloud.middlewares=security-headers@file, nextcloud-redirect@file"
       # services
-      - "traefik.http.routers.nextcloud-secure.service=nextcloud"
+      - "traefik.http.routers.nextcloud.service=nextcloud"
       - "traefik.http.services.nextcloud.loadbalancer.server.port=80"
 
   # https://hub.docker.com/r/onlyoffice/documentserver
@@ -59,9 +56,11 @@ services:
       - no-new-privileges:true
     networks:
       - proxy
+      - dbs
     depends_on:
       - db
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - ${DATA}/ds-logs:/var/log/onlyoffice
       - ${DATA}/ds-cache:/var/lib/onlyoffice
     environment:
@@ -70,22 +69,17 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=proxy"
-      # http
-      - "traefik.http.routers.documentserver.entrypoints=web"
-      - "traefik.http.routers.documentserver.rule=Host(`documentserver.${DOMAIN_TLD}`)"
-      - "traefik.http.middlewares.documentserver-https-redirect.redirectscheme.scheme=https"
-      - "traefik.http.routers.documentserver.middlewares=documentserver-https-redirect"
       # https
-      - "traefik.http.routers.documentserver-secure.entrypoints=web-secure"
-      - "traefik.http.routers.documentserver-secure.rule=Host(`documentserver.${DOMAIN_TLD}`)"
-      - "traefik.http.routers.documentserver-secure.tls=true"
-      - "traefik.http.routers.documentserver-secure.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.documentserver-secure.tls.domains[0].main=*.${DOMAIN_TLD}"
-      - "traefik.http.routers.documentserver-secure.tls.options=default"
+      - "traefik.http.routers.documentserver.entrypoints=web-secure"
+      - "traefik.http.routers.documentserver.rule=Host(`documentserver.${DOMAIN_TLD}`)"
+      - "traefik.http.routers.documentserver.tls=true"
+      - "traefik.http.routers.documentserver.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.documentserver.tls.domains[0].main=*.${DOMAIN_TLD}"
+      - "traefik.http.routers.documentserver.tls.options=default"
       # middlewares
-      - "traefik.http.routers.documentserver-secure.middlewares=security-headers@file"
+      - "traefik.http.routers.documentserver.middlewares=security-headers@file"
       # services
-      - "traefik.http.routers.documentserver-secure.service=documentserver"
+      - "traefik.http.routers.documentserver.service=documentserver"
       - "traefik.http.services.documentserver.loadbalancer.server.port=80"
 
   # https://hub.docker.com/_/postgres
@@ -97,8 +91,9 @@ services:
     security_opt:
       - no-new-privileges:true
     networks:
-      - proxy
+      - dbs
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - ${DATA}/db-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: superUser
@@ -113,8 +108,9 @@ services:
     security_opt:
       - no-new-privileges:true
     networks:
-      - proxy
+      - dbs
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - ${DATA}/redis-db:/bitnami/redis/data
       - ${DATA}/redis-config:/opt/bitnami/redis/etc/redis.conf
     environment:
@@ -122,4 +118,6 @@ services:
 
 networks:
   proxy:
+    external: true
+  dbs:
     external: true
