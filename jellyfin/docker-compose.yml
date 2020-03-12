@@ -1,0 +1,37 @@
+version: "3.7"
+
+services:
+  # https://hub.docker.com/r/jellyfin/jellyfin
+  jellyfin:  
+    image: jellyfin/jellyfin:10.5.0
+    restart: unless-stopped
+    container_name: jellyfin
+    hostname: jellyfin
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - proxy
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${DATA}/jellyfin-config:/config
+      - ${DATA}/jellyfin-cache:/cache
+      - ${DATA}/nextcloud-data:/media:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      # https
+      - "traefik.http.routers.jellyfin.entrypoints=web-secure"
+      - "traefik.http.routers.jellyfin.rule=Host(`jellyfin.${DOMAIN_TLD}`)"
+      - "traefik.http.routers.jellyfin.tls=true"
+      - "traefik.http.routers.jellyfin.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.jellyfin.tls.domains[0].main=*.${DOMAIN_TLD}"
+      - "traefik.http.routers.jellyfin.tls.options=default"
+      # middlewares
+      - "traefik.http.routers.jellyfin.middlewares=security-headers@file"
+      # services
+      - "traefik.http.routers.jellyfin.service=jellyfin"
+      - "traefik.http.services.jellyfin.loadbalancer.server.port=8096"
+
+networks:
+  proxy:
+    external: true
