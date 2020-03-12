@@ -35,7 +35,7 @@ services:
       - "traefik.http.routers.traefik-secure.tls.certresolver=letsencrypt"
       - "traefik.http.routers.traefik-secure.tls.domains[0].main=*.${DOMAIN_TLD}"
       - "traefik.http.routers.traefik-secure.tls.options=default"
-      # middleware
+      # middlewares
       - "traefik.http.middlewares.traefik-auth.basicauth.users=${USER}:${PASSWORD}"
       - "traefik.http.routers.traefik-secure.middlewares=traefik-auth, secured@file"
       # services

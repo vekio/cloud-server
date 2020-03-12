@@ -14,13 +14,24 @@ http:
 
     security-headers:
       headers:
+        referrerPolicy: no-referrer
         forceSTSHeader: true
-        sslRedirect: true
+        stsSeconds: 31536000
+        stsIncludeSubdomains: true
         stsPreload: true
         contentTypeNosniff: true
         browserXssFilter: true
-        stsIncludeSubdomains: true
-        stsSeconds: 315360000
+        customRequestHeaders:
+          X-Forwarded-Proto: https
+        customResponseHeaders:
+          X-Powered-By: "Redstone"
+          Server: "Server"
+
+    nextcloud-redirect:
+      redirectRegex:
+        permanent: true
+        regex: http://(.*)/.well-known/(card|cal)dav
+        replacement: http://$$1/remote.php/dav/
 
     secured:
       chain:
