@@ -1,9 +1,5 @@
 http:
   middlewares:
-    https-redirect:
-      redirectScheme:
-        scheme: https
-
     security-networks:
       ipWhiteList:
         sourceRange:
@@ -21,6 +17,7 @@ http:
         stsPreload: true
         contentTypeNosniff: true
         browserXssFilter: true
+        sslRedirect: true
         customRequestHeaders:
           X-Forwarded-Proto: https
         customResponseHeaders:
