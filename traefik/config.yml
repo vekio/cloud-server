@@ -1,0 +1,29 @@
+http:
+  middlewares:
+    https-redirect:
+      redirectScheme:
+        scheme: https
+
+    security-networks:
+      ipWhiteList:
+        sourceRange:
+        - "10.0.0.0/24"
+        - "192.168.0.0/16"
+        - "172.0.0.0/8"
+        - "192.168.1.0/24"
+
+    security-headers:
+      headers:
+        forceSTSHeader: true
+        sslRedirect: true
+        stsPreload: true
+        contentTypeNosniff: true
+        browserXssFilter: true
+        stsIncludeSubdomains: true
+        stsSeconds: 315360000
+
+    secured:
+      chain:
+        middlewares:
+        - security-networks
+        - security-headers

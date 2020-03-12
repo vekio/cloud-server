@@ -1,28 +1,27 @@
 ## Static configuration
 log:
   level: INFO
-  
+
 accessLog:
   filePath: /etc/traefik/access.log
   bufferingSize: 1000
-  
+
 api:
   dashboard: true
+
+entryPoints:
+  web:
+    address: ":80"
+  web-secure:
+    address: ":443"
 
 providers:
   docker:
     endpoint: "unix:///var/run/docker.sock"
     exposedByDefault: false
   file:
-    filename: /etc/traefik/dynamic.yml
-    watch: true
+    filename: /etc/traefik/config.yml
 
-entryPoints:
-  http:
-    address: ":80"
-  https:
-    address: ":443"
-    
 certificatesResolvers:
   letsencrypt:
     acme:
@@ -32,3 +31,14 @@ certificatesResolvers:
       dnsChallenge:
         provider: digitalocean
         delayBeforeCheck: 0
+
+tls:
+  options:
+    default:
+      sniStrict: true
+      minVersion: VersionTLS12
+      cipherSuites:
+        - TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
+        - TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
+        - TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
