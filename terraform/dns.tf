@@ -48,3 +48,12 @@ resource "digitalocean_record" "jellyfin_domain_tld" {
   value   = format("%s.", var.domain_tld)
   ttl     = 43200
 }
+
+# bitwarden.domain.tld
+resource "digitalocean_record" "bitwarden_domain_tld" {
+  domain  = digitalocean_domain.domain_tld.name
+  type    = "CNAME"
+  name    = "bitwarden"
+  value   = format("%s.", var.domain_tld)
+  ttl     = 43200
+}
