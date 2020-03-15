@@ -32,17 +32,17 @@ services:
       - traefik.http.middlewares.https-redirect.redirectscheme.scheme=https
       - traefik.http.middlewares.https-redirect.redirectscheme.permanent=true
       # https
-      - "traefik.http.routers.traefik-secure.entrypoints=web-secure"
-      - "traefik.http.routers.traefik-secure.rule=Host(`traefik.${DOMAIN_TLD}`)"
-      - "traefik.http.routers.traefik-secure.tls=true"
-      - "traefik.http.routers.traefik-secure.tls.certresolver=letsencrypt"
-      - "traefik.http.routers.traefik-secure.tls.domains[0].main=*.${DOMAIN_TLD}"
-      - "traefik.http.routers.traefik-secure.tls.options=default"
+      - "traefik.http.routers.traefik.entrypoints=web-secure"
+      - "traefik.http.routers.traefik.rule=Host(`traefik.${DOMAIN_TLD}`)"
+      - "traefik.http.routers.traefik.tls=true"
+      - "traefik.http.routers.traefik.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.traefik.tls.domains[0].main=*.${DOMAIN_TLD}"
+      - "traefik.http.routers.traefik.tls.options=default"
       # middlewares
       - "traefik.http.middlewares.traefik-auth.basicauth.users=${USER}:${PASSWORD}"
-      - "traefik.http.routers.traefik-secure.middlewares=secured@file, traefik-auth"
+      - "traefik.http.routers.traefik.middlewares=secured@file, traefik-auth"
       # services
-      - "traefik.http.routers.traefik-secure.service=api@internal"
+      - "traefik.http.routers.traefik.service=api@internal"
 
 networks:
   proxy:
