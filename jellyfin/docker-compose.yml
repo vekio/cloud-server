@@ -21,7 +21,7 @@ services:
       - "traefik.docker.network=proxy"
       # https
       - "traefik.http.routers.jellyfin.entrypoints=web-secure"
-      - "traefik.http.routers.jellyfin.rule=Host(`jellyfin.${DOMAIN_TLD}`)"
+      - "traefik.http.routers.jellyfin.rule=Host(`media.${DOMAIN_TLD}`)"
       - "traefik.http.routers.jellyfin.tls=true"
       - "traefik.http.routers.jellyfin.tls.certresolver=letsencrypt"
       - "traefik.http.routers.jellyfin.tls.domains[0].main=*.${DOMAIN_TLD}"

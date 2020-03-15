@@ -22,11 +22,11 @@ resource "digitalocean_record" "traefik_domain_tld" {
   ttl     = 43200
 }
 
-# nextcloud.domain.tld
-resource "digitalocean_record" "nextcloud_domain_tld" {
+# cloud.domain.tld
+resource "digitalocean_record" "cloud_domain_tld" {
   domain  = digitalocean_domain.domain_tld.name
   type    = "CNAME"
-  name    = "nextcloud"
+  name    = "cloud"
   value   = format("%s.", var.domain_tld)
   ttl     = 43200
 }
@@ -40,20 +40,20 @@ resource "digitalocean_record" "documentserver_domain_tld" {
   ttl     = 43200
 }
 
-# jellyfin.domain.tld
-resource "digitalocean_record" "jellyfin_domain_tld" {
+# media.domain.tld
+resource "digitalocean_record" "media_domain_tld" {
   domain  = digitalocean_domain.domain_tld.name
   type    = "CNAME"
-  name    = "jellyfin"
+  name    = "media"
   value   = format("%s.", var.domain_tld)
   ttl     = 43200
 }
 
-# bitwarden.domain.tld
-resource "digitalocean_record" "bitwarden_domain_tld" {
+# vault.domain.tld
+resource "digitalocean_record" "vault_domain_tld" {
   domain  = digitalocean_domain.domain_tld.name
   type    = "CNAME"
-  name    = "bitwarden"
+  name    = "vault"
   value   = format("%s.", var.domain_tld)
   ttl     = 43200
 }

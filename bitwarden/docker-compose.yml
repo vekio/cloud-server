@@ -23,7 +23,7 @@ services:
       # UI
       # https
       - "traefik.http.routers.bitwarden-ui.entrypoints=web-secure"
-      - "traefik.http.routers.bitwarden-ui.rule=Host(`bitwarden.${DOMAIN_TLD}`)"
+      - "traefik.http.routers.bitwarden-ui.rule=Host(`vault.${DOMAIN_TLD}`)"
       - "traefik.http.routers.bitwarden-ui.tls=true"
       - "traefik.http.routers.bitwarden-ui.tls.certresolver=letsencrypt"
       - "traefik.http.routers.bitwarden-ui.tls.domains[0].main=*.${DOMAIN_TLD}"
@@ -36,7 +36,7 @@ services:
       # WEBSOCKET
       # https
       - "traefik.http.routers.bitwarden-websocket.entrypoints=web-secure"
-      - "traefik.http.routers.bitwarden-websocket.rule=Host(`bitwarden.${DOMAIN_TLD}`) && Path(`/notifications/hub`)"
+      - "traefik.http.routers.bitwarden-websocket.rule=Host(`vault.${DOMAIN_TLD}`) && Path(`/notifications/hub`)"
       - "traefik.http.routers.bitwarden-websocket.tls=true"
       - "traefik.http.routers.bitwarden-websocket.tls.certresolver=letsencrypt"
       - "traefik.http.routers.bitwarden-websocket.tls.domains[0].main=*.${DOMAIN_TLD}"

@@ -23,7 +23,7 @@ services:
       - ${DATA}/nextcloud-config:/var/www/html/config
       - ${DATA}/nextcloud-data:/var/www/html/data
     environment:
-      NEXTCLOUD_TRUSTED_DOMAINS: "nextcloud.${DOMAIN_TLD}"
+      NEXTCLOUD_TRUSTED_DOMAINS: "cloud.${DOMAIN_TLD}"
       REDIS_HOST: redis
       REDIS_HOST_PASSWORD: ${DB_PASSWORD}
       POSTGRES_DB: nextcloud
@@ -35,7 +35,7 @@ services:
       - "traefik.docker.network=proxy"
       # https
       - "traefik.http.routers.nextcloud.entrypoints=web-secure"
-      - "traefik.http.routers.nextcloud.rule=Host(`nextcloud.${DOMAIN_TLD}`)"
+      - "traefik.http.routers.nextcloud.rule=Host(`cloud.${DOMAIN_TLD}`)"
       - "traefik.http.routers.nextcloud.tls=true"
       - "traefik.http.routers.nextcloud.tls.certresolver=letsencrypt"
       - "traefik.http.routers.nextcloud.tls.domains[0].main=*.${DOMAIN_TLD}"
