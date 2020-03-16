@@ -1,0 +1,31 @@
+version: "3.7"
+
+services:
+  # https://hub.docker.com/r/itzg/mc-router
+  router:
+    image: itzg/mc-router
+    restart: unless-stopped
+    container_name: mc-router
+    hostname: mc-router
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - 25565:25565
+    command:
+      - --mapping=vanilla.${DOMAIN_TLD}=vanilla:25565
+
+  # https://hub.docker.com/r/itzg/minecraft-server
+  # https://github.com/itzg/docker-minecraft-server
+  vanilla:
+    image: itzg/minecraft-server
+    restart: unless-stopped
+    container_name: vanilla
+    hostname: vanilla
+    security_opt:
+      - no-new-privileges:true
+    volumes: 
+      - "${DATA}/vanilla:/data"
+    environment:
+      EULA: "TRUE"
+      ENABLE_RCON: "true"
+      RCON_PASSWORD: "password"
