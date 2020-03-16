@@ -43,6 +43,8 @@ services:
       - "traefik.http.routers.traefik.middlewares=secured@file, traefik-auth"
       # services
       - "traefik.http.routers.traefik.service=api@internal"
+
+  # https://hub.docker.com/_/nextcloud
   nextcloud:
     image: nextcloud:18.0.2
     restart: unless-stopped

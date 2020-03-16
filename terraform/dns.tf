@@ -57,3 +57,12 @@ resource "digitalocean_record" "vault_domain_tld" {
   value   = format("%s.", var.domain_tld)
   ttl     = 43200
 }
+
+# vanilla.domain.tld
+resource "digitalocean_record" "vanilla_domain_tld" {
+  domain  = digitalocean_domain.domain_tld.name
+  type    = "CNAME"
+  name    = "vanilla"
+  value   = format("%s.", var.domain_tld)
+  ttl     = 43200
+}
