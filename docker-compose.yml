@@ -201,7 +201,7 @@ services:
     volumes:
       - ${DATA}/bw-data:/data
     environment:
-      ADMIN_TOKEN: ${TOKEN}
+      ADMIN_TOKEN: ${ADMIN_TOKEN}
       WEBSOCKET_ENABLED: "true"
       SIGNUPS_ALLOWED: "true"
     labels:
